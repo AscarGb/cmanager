@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "cmanager": {
+      "commandName": "Project",
+      "commandLineArgs": "add-user -u test -r user -p zxcASDqwe!@#"
+    }
+  }
+}
