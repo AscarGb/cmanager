@@ -7,7 +7,7 @@ using System.Text;
 
 namespace cmanager.Verbs
 {
-    public class UpdateUserVerb : AbstractUserVerb<UpdateUserOptions>
+    public class UpdateUserVerb : AbstractVerb<UpdateUserOptions>
     {
         public UpdateUserVerb(
             UserManager<IdentityUser> userManager,

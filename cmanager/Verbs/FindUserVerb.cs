@@ -9,7 +9,7 @@ using System.Text;
 namespace cmanager.Verbs
 {
 
-    public class FindUserVerb : AbstractUserVerb<FindUserOptions>
+    public class FindUserVerb : AbstractVerb<FindUserOptions>
     {
         public FindUserVerb(
             UserManager<IdentityUser> userManager,

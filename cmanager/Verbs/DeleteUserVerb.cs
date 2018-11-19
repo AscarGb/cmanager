@@ -6,7 +6,7 @@ using System.Text;
 
 namespace cmanager.Verbs
 {
-    public class DeleteUserVerb : AbstractUserVerb<DeleteUserOptions>
+    public class DeleteUserVerb : AbstractVerb<DeleteUserOptions>
     {
         public DeleteUserVerb(
             UserManager<IdentityUser> userManager,

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace cmanager.Verbs
 {
-    public class AddUserVerb : AbstractUserVerb<AddUserOptions>
+    public class AddUserVerb : AbstractVerb<AddUserOptions>
     {
         public AddUserVerb(
             UserManager<IdentityUser> userManager,

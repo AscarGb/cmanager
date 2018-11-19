@@ -9,7 +9,7 @@ namespace cmanager.Options
     [Verb("update-user", HelpText = "Update user")]
     public class UpdateUserOptions
     {
-        [Option('u', "user-name", HelpText = "User name", Required = true)]
+        [Value(0, HelpText = "User name", Required = true)]
         public string UserName { get; set; }
 
         [Option('r', "role-names", HelpText = "New Roles")]

@@ -30,7 +30,13 @@ namespace cmanager
             services.AddTransient<UpdateUserVerb>();
             services.AddTransient<FindUserVerb>();
             services.AddTransient<DeleteUserVerb>();
+            services.AddTransient<CreateRoleVerb>();
+            services.AddTransient<RolesListVerb>();
+            services.AddTransient<AddRoleVerb>();
+            services.AddTransient<DeleteRoleVerb>();
+            services.AddTransient<RenameRoleVerb>();
             services.AddSingleton<ConsoleWriter>();
+
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             var dbType = configuration.GetSection("DbType").Get<string>();
@@ -50,12 +56,18 @@ namespace cmanager
             try
             {
                 return Parser.Default.ParseArguments<AddUserOptions,
-                    UpdateUserOptions, FindUserOptions, DeleteUserOptions>(args)
+                    UpdateUserOptions, FindUserOptions, DeleteUserOptions, CreateRoleOptions,
+                    RolesListOptions, AddRoleOptions, DeleteRoleOptions, RenameRoleOptions>(args)
                     .MapResult(
                     (AddUserOptions opts) => provider.GetService<AddUserVerb>().Execute(opts),
                     (UpdateUserOptions opts) => provider.GetService<UpdateUserVerb>().Execute(opts),
                     (FindUserOptions opts) => provider.GetService<FindUserVerb>().Execute(opts),
                     (DeleteUserOptions opts) => provider.GetService<DeleteUserVerb>().Execute(opts),
+                    (CreateRoleOptions opts) => provider.GetService<CreateRoleVerb>().Execute(opts),
+                    (RolesListOptions opts) => provider.GetService<RolesListVerb>().Execute(),
+                    (AddRoleOptions opts) => provider.GetService<AddRoleVerb>().Execute(opts),
+                    (DeleteRoleOptions opts) => provider.GetService<DeleteRoleVerb>().Execute(opts),
+                    (RenameRoleOptions opts) => provider.GetService<RenameRoleVerb>().Execute(opts),
                     errs => 1);
             }
             catch (Exception e)
