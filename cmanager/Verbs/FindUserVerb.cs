@@ -9,21 +9,14 @@ using System.Text;
 namespace cmanager.Verbs
 {
 
-    public class FindUserVerb
+    public class FindUserVerb : AbstractUserVerb<FindUserOptions>
     {
-        readonly UserManager<IdentityUser> _userManager;
-        readonly RoleManager<IdentityRole> _roleManager;
-        readonly ConsoleWriter _consoleWriter;
         public FindUserVerb(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            ConsoleWriter consoleWriter)
-        {
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _consoleWriter = consoleWriter;
-        }
-        public int FindUser(FindUserOptions opts)
+            ConsoleWriter consoleWriter) : base(userManager, roleManager, consoleWriter) { }
+
+        override public int Execute(FindUserOptions opts)
         {
             if (opts.UserName != null)
             {
@@ -35,7 +28,7 @@ namespace cmanager.Verbs
                 }
                 else
                 {
-                    _consoleWriter.WriteUsers(new []{ u });
+                    _consoleWriter.WriteUsers(new[] { u });
                     return 0;
                 }
             }

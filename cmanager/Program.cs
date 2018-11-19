@@ -29,6 +29,7 @@ namespace cmanager
             services.AddTransient<AddUserVerb>();
             services.AddTransient<UpdateUserVerb>();
             services.AddTransient<FindUserVerb>();
+            services.AddTransient<DeleteUserVerb>();
             services.AddSingleton<ConsoleWriter>();
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -49,11 +50,12 @@ namespace cmanager
             try
             {
                 return Parser.Default.ParseArguments<AddUserOptions,
-                    UpdateUserOptions, FindUserOptions>(args)
+                    UpdateUserOptions, FindUserOptions, DeleteUserOptions>(args)
                     .MapResult(
-                    (AddUserOptions opts) => provider.GetService<AddUserVerb>().AddNewUser(opts),
-                    (UpdateUserOptions opts) => provider.GetService<UpdateUserVerb>().UpdateUser(opts),
-                    (FindUserOptions opts) => provider.GetService<FindUserVerb>().FindUser(opts),
+                    (AddUserOptions opts) => provider.GetService<AddUserVerb>().Execute(opts),
+                    (UpdateUserOptions opts) => provider.GetService<UpdateUserVerb>().Execute(opts),
+                    (FindUserOptions opts) => provider.GetService<FindUserVerb>().Execute(opts),
+                    (DeleteUserOptions opts) => provider.GetService<DeleteUserVerb>().Execute(opts),
                     errs => 1);
             }
             catch (Exception e)

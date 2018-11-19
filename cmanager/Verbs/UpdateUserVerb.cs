@@ -7,22 +7,14 @@ using System.Text;
 
 namespace cmanager.Verbs
 {
-    public class UpdateUserVerb
+    public class UpdateUserVerb : AbstractUserVerb<UpdateUserOptions>
     {
-        readonly UserManager<IdentityUser> _userManager;
-        readonly RoleManager<IdentityRole> _roleManager;
-        readonly ConsoleWriter _consoleWriter;
         public UpdateUserVerb(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            ConsoleWriter consoleWriter)
-        {
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _consoleWriter = consoleWriter;
-        }
+            ConsoleWriter consoleWriter) : base(userManager, roleManager, consoleWriter) { }
 
-        public int UpdateUser(UpdateUserOptions opts)
+        override public int Execute(UpdateUserOptions opts)
         {
             if (opts.Claims.Any())
                 ClaimsHelper.Check(opts.Claims);

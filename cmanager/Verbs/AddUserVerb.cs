@@ -8,30 +8,23 @@ using System.Text;
 
 namespace cmanager.Verbs
 {
-    public class AddUserVerb
+    public class AddUserVerb : AbstractUserVerb<AddUserOptions>
     {
-        readonly UserManager<IdentityUser> _userManager;
-        readonly RoleManager<IdentityRole> _roleManager;
-        readonly ConsoleWriter _consoleWriter;
         public AddUserVerb(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            ConsoleWriter consoleWriter)
-        {
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _consoleWriter = consoleWriter;
-        }
-        public int AddNewUser(AddUserOptions opts)
+            ConsoleWriter consoleWriter) : base(userManager, roleManager, consoleWriter) { }
+
+        override public int Execute(AddUserOptions opts)
         {
             if (opts.Claims.Any())
                 ClaimsHelper.Check(opts.Claims);
-                
+
 
             IdentityUser user = new IdentityUser { UserName = opts.UserName };
 
             _userManager.CreateAsync(user, opts.UserPassword).GetAwaiter().GetResult()
-                .Check();            
+                .Check();
 
             foreach (var r in opts.Roles)
             {
@@ -46,7 +39,7 @@ namespace cmanager.Verbs
             {
                 _userManager.AddClaimsAsync(user, ClaimsHelper.Parse(opts.Claims))
                     .GetAwaiter().GetResult()
-                    .Check();                
+                    .Check();
             }
 
             if (opts.UserEMail != null)
@@ -56,9 +49,9 @@ namespace cmanager.Verbs
                 user.PhoneNumber = opts.UserPhone;
 
             _userManager.UpdateAsync(user).Result
-                .Check();            
+                .Check();
 
-            _consoleWriter.WriteUsers(new []{ user });
+            _consoleWriter.WriteUsers(new[] { user });
 
             return 0;
         }
