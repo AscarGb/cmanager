@@ -18,8 +18,7 @@ namespace cmanager.Verbs
             var u = _userManager.FindByNameAsync(opts.UserName).Result;
             if (u == null)
             {
-                _consoleWriter.WriteText("Not found");
-                return 1;
+                throw new Exception("User not found");
             }
 
             var result = _userManager.DeleteAsync(u).Result;

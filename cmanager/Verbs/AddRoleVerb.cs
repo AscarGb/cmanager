@@ -19,8 +19,7 @@ namespace cmanager.Verbs
 
             if (user == null)
             {
-                _consoleWriter.WriteText("User not found");
-                return 1;
+                throw new Exception("User not found");                
             }
 
             foreach (var r in opts.Roles)

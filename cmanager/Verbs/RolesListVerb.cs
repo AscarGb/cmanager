@@ -15,6 +15,7 @@ namespace cmanager.Verbs
         public override int Execute()
         {
             _consoleWriter.WriteText(string.Join(", ", _roleManager.Roles));
+
             return 0;
         }
     }

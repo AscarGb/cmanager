@@ -18,8 +18,7 @@ namespace cmanager.Verbs
 
             if (role == null)
             {
-                _consoleWriter.WriteText("Role not found");
-                return 1;
+                throw new Exception("Role not found");
             }
 
             role.Name = opts.NewRoleName;

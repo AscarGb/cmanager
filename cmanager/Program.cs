@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace cmanager
 {
@@ -37,6 +38,8 @@ namespace cmanager
             services.AddTransient<RenameRoleVerb>();
             services.AddSingleton<ConsoleWriter>();
 
+            services.AddLogging(configure => configure.AddConsole())
+                .Configure<LoggerFilterOptions>(options => options.MinLevel = LogLevel.Information);
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             var dbType = configuration.GetSection("DbType").Get<string>();
@@ -72,7 +75,8 @@ namespace cmanager
             }
             catch (Exception e)
             {
-                provider.GetService<ConsoleWriter>().WriteText(e.Message);
+                var logger = provider.GetRequiredService<ILogger<Program>>();
+                logger.LogError(e, "An error occurred");
                 return 1;
             }
         }
