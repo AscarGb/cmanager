@@ -3,6 +3,8 @@ AspNetCore Identity simple console manager
 
 Manage users, roles and claims
 
+Compatible with <b>UserManager&lt;IdentityUser&gt;</b> and <b>RoleManager&lt;IdentityRole&gt;</b>
+
 Supported databases: My SQl, Ms SQL
 
 ## Commands:
